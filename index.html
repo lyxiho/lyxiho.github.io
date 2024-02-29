@@ -172,7 +172,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-02-29 20:46:22 / 修改时间：21:02:39" itemprop="dateCreated datePublished" datetime="2024-02-29T20:46:22+08:00">2024-02-29</time>
+              <time title="创建时间：2024-02-29 20:46:22 / 修改时间：21:08:51" itemprop="dateCreated datePublished" datetime="2024-02-29T20:46:22+08:00">2024-02-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,18 +219,18 @@
 </li>
 <li><p>修改windows本地的hosts文件夹</p>
 <p>这个文件在<code>C:\Windows\System32\drivers\etc\hosts</code>，添加如下信息</p>
-<p><img src="/.com//App\Typora\photoData\image-20240207103853935-17092109672001.png"></p>
+<p><img src="/.com//blog\source_posts\无法通过主机名访问hadoop集群web端的解决方法\image-20240207103853935-17092121113003.png"></p>
 </li>
 </ul>
 <h2 id="注意（特殊情况）"><a href="#注意（特殊情况）" class="headerlink" title="注意（特殊情况）"></a>注意（特殊情况）</h2><p>完成上述操作基本可以实现通过主机名访问，而在网络上搜索此问题给出的答案也是这样，如果完成上面全部操作仍然不能通过主机名访问，大概率是windows的hosts文件编码的问题，对于 Windows 系统来说，当您修改了 hosts 文件后，有可能是编码的原因导致修改不生效：</p>
 <h3 id="hosts文件格式问题"><a href="#hosts文件格式问题" class="headerlink" title="hosts文件格式问题"></a>hosts文件格式问题</h3><ul>
 <li><p>在修改hosts文件时，不要使用notepad++等软件，使用记事本编辑</p>
-<img src="/.com//App\Typora\photoData\image-20240207104722186-17092109857993.png" style="zoom:67%;">
+<img src="/.com//blog\source\_posts\无法通过主机名访问hadoop集群web端的解决方法\image-20240207104722186-17092109857993.png" style="zoom:67%;">
 
 
 </li>
 <li><p>添加完信息后，另存到桌面，文件格式选择ASNI</p>
-<img src="/.com//App\Typora\photoData\image-20240207104850779-17092110061085.png" style="zoom: 67%;">
+<img src="/.com//blog\source\_posts\无法通过主机名访问hadoop集群web端的解决方法\image-20240207104850779-17092110061085.png" style="zoom: 67%;">
 </li>
 <li><p>保存之后文件名会多出后缀<code>.txt</code>，打开文件发现有乱码（UTF-8空格变成了乱码），如果有乱码去掉乱码，重命名去掉后缀，然后复制替换原来的hosts文件</p>
 </li>
