@@ -22,16 +22,18 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="关于hive中的动态分区问题[TOC] 问题描述​	在学习数仓时，遇到从几个表中读数据存入到新的表，并涉及到动态分区问题，即在查询语句下新加上一行查询，起初不懂这个动态分区是如何为分区字段赋值的，通过自己实践终于搞懂了，下面详细解析一下 sql语句建表语句12345678910111213CREATE EXTERNAL TABLE dwd_tool_coupon_used_inc(    &#96;id&#96;">
+  <meta name="description" content="关于hive中的动态分区问题[TOC] 问题描述​	在学习数仓时，遇到从几个表中读数据存入到新的表，并涉及到动态分区问题，即在查询语句下新加上一行查询，起初不懂这个动态分区是如何为分区字段赋值的，通过自己实践终于搞懂了，下面详细解析一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lyxiho的博客">
+<meta property="og:title" content="关于hive中的动态分区问题">
 <meta property="og:url" content="http://example.com/2024/03/01/%E5%85%B3%E4%BA%8Ehive%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="lyxiho的博客">
-<meta property="og:description" content="关于hive中的动态分区问题[TOC] 问题描述​	在学习数仓时，遇到从几个表中读数据存入到新的表，并涉及到动态分区问题，即在查询语句下新加上一行查询，起初不懂这个动态分区是如何为分区字段赋值的，通过自己实践终于搞懂了，下面详细解析一下 sql语句建表语句12345678910111213CREATE EXTERNAL TABLE dwd_tool_coupon_used_inc(    &#96;id&#96;">
+<meta property="og:description" content="关于hive中的动态分区问题[TOC] 问题描述​	在学习数仓时，遇到从几个表中读数据存入到新的表，并涉及到动态分区问题，即在查询语句下新加上一行查询，起初不懂这个动态分区是如何为分区字段赋值的，通过自己实践终于搞懂了，下面详细解析一下">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-01T14:56:14.331Z">
-<meta property="article:modified_time" content="2024-03-01T14:54:26.687Z">
+<meta property="article:published_time" content="2024-03-01T12:46:22.000Z">
+<meta property="article:modified_time" content="2024-03-01T15:05:17.463Z">
 <meta property="article:author" content="lyxiho">
+<meta property="article:tag" content="数仓">
+<meta property="article:tag" content="hive">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2024/03/01/%E5%85%B3%E4%BA%8Ehive%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E9%97%AE%E9%A2%98/">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title> | lyxiho的博客</title>
+  <title>关于hive中的动态分区问题 | lyxiho的博客</title>
   
 
 
@@ -186,7 +188,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          关于hive中的动态分区问题
         </h1>
 
         <div class="post-meta">
@@ -197,7 +199,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-03-01 22:56:14 / 修改时间：22:54:26" itemprop="dateCreated datePublished" datetime="2024-03-01T22:56:14+08:00">2024-03-01</time>
+              <time title="创建时间：2024-03-01 20:46:22 / 修改时间：23:05:17" itemprop="dateCreated datePublished" datetime="2024-03-01T20:46:22+08:00">2024-03-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
+                </span>
             </span>
 
           
@@ -234,6 +245,7 @@
       
         <h1 id="关于hive中的动态分区问题"><a href="#关于hive中的动态分区问题" class="headerlink" title="关于hive中的动态分区问题"></a>关于hive中的动态分区问题</h1><p>[TOC]</p>
 <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>​	在学习数仓时，遇到从几个表中读数据存入到新的表，并涉及到动态分区问题，即在查询语句下新加上一行查询，起初不懂这个动态分区是如何为分区字段赋值的，通过自己实践终于搞懂了，下面详细解析一下</p>
+<span id="more"></span>
 <h2 id="sql语句"><a href="#sql语句" class="headerlink" title="sql语句"></a>sql语句</h2><h3 id="建表语句"><a href="#建表语句" class="headerlink" title="建表语句"></a>建表语句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">EXTERNAL</span> <span class="keyword">TABLE</span> dwd_tool_coupon_used_inc</span><br><span class="line">(</span><br><span class="line">    `id`           STRING COMMENT <span class="string">&#x27;编号&#x27;</span>,</span><br><span class="line">    `coupon_id`    STRING COMMENT <span class="string">&#x27;优惠券ID&#x27;</span>,</span><br><span class="line">    `user_id`      STRING COMMENT <span class="string">&#x27;用户ID&#x27;</span>,</span><br><span class="line">    `order_id`     STRING COMMENT <span class="string">&#x27;订单ID&#x27;</span>,</span><br><span class="line">    `date_id`      STRING COMMENT <span class="string">&#x27;日期ID&#x27;</span>,</span><br><span class="line">    `payment_time` STRING COMMENT <span class="string">&#x27;使用(支付)时间&#x27;</span></span><br><span class="line">) COMMENT <span class="string">&#x27;优惠券使用（支付）事务事实表&#x27;</span></span><br><span class="line">    PARTITIONED <span class="keyword">BY</span> (`dt` STRING)</span><br><span class="line">    STORED <span class="keyword">AS</span> ORC</span><br><span class="line">    LOCATION <span class="string">&#x27;/warehouse/gmall/dwd/dwd_tool_coupon_used_inc/&#x27;</span></span><br><span class="line">    TBLPROPERTIES (&quot;orc.compress&quot; <span class="operator">=</span> &quot;snappy&quot;);</span><br></pre></td></tr></table></figure>
 
 <h3 id="插入语句"><a href="#插入语句" class="headerlink" title="插入语句"></a>插入语句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_tool_coupon_used_inc <span class="keyword">partition</span> (dt)</span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">    data.id,</span><br><span class="line">    data.coupon_id,</span><br><span class="line">    data.user_id,</span><br><span class="line">    data.order_id,</span><br><span class="line">    date_format(data.used_time,<span class="string">&#x27;yyyy-MM-dd&#x27;</span>) date_id,</span><br><span class="line">    data.used_time,</span><br><span class="line">    date_format(data.used_time,<span class="string">&#x27;yyyy-MM-dd&#x27;</span>)  <span class="comment">-- 动态分区添加</span></span><br><span class="line"><span class="keyword">from</span> ods_coupon_use_inc</span><br><span class="line"><span class="keyword">where</span> dt <span class="operator">=</span> <span class="string">&#x27;2022--06-08&#x27;</span></span><br><span class="line"><span class="keyword">and</span> type <span class="operator">=</span> <span class="string">&#x27;bootstrap-insert&#x27;</span>;</span><br></pre></td></tr></table></figure>
@@ -253,7 +265,7 @@
 	<div>
      <div>
     
-        <div style="text-align:center;color: #ccc;font-size:24px;">-------------���Ľ���<i class="fa fa-paw"></i>��л�����Ķ�-------------</div>
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束，感谢您的阅读-------------</div>
     
 </div>
 	</div>
@@ -267,7 +279,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2024/03/01/%E5%85%B3%E4%BA%8Ehive%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E9%97%AE%E9%A2%98/" title="">http://example.com/2024/03/01/关于hive中的动态分区问题/</a>
+    <a href="http://example.com/2024/03/01/%E5%85%B3%E4%BA%8Ehive%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E9%97%AE%E9%A2%98/" title="关于hive中的动态分区问题">http://example.com/2024/03/01/关于hive中的动态分区问题/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -296,6 +308,10 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E4%BB%93/" rel="tag"># 数仓</a>
+              <a href="/tags/hive/" rel="tag"># hive</a>
+          </div>
 
         
 
@@ -394,7 +410,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
